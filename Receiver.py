@@ -10,7 +10,7 @@ s.listen()
 client,addr=s.accept()
 
 root = Tk()
-root.receiver("Receiver")
+root.title("Receiver")
 
 input_user = StringVar()
 input_field = Entry(root,text=input_user)
