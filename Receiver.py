@@ -16,8 +16,6 @@ input_user = StringVar()
 input_field = Entry(root,text=input_user)
 input_field.pack(side=BOTTOM, fill=X)
 
-messages = Text(root)
-
 def receive():
 	messages.insert(INSERT, 'Received : %s\n'%client.recv(1024).decode('utf-8'))
 
@@ -27,8 +25,9 @@ def EnterPressed(event):
 	client.send(bytes(input_get, encoding='utf-8'))
 	input_user.set('')
 
-
+messages = Text(root)
 messages.pack()
-button = Button(root, text="display message", command=receive).pack()
+messages.insert(INSERT, str(addr)+" Connected\n")
 input_field.bind("<Return>", EnterPressed)
+button = Button(root, text="display message", command=receive).pack()
 root.mainloop()
