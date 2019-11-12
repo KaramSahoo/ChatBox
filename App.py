@@ -4,7 +4,6 @@ from threading import Thread
 
 menu_window = Tk()
 
-
 def menu():
     menu_window.title("Menu")
     menu_window.geometry("180x80")
@@ -15,12 +14,10 @@ def menu():
     receiver_btn.place(x=90, y=30)
     menu_window.mainloop()
 
-
 def client():
     menu_window.destroy()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     ip = socket.gethostbyname(socket.gethostname())
-
     s.connect((ip, 80))
 
     root = Tk()
@@ -31,7 +28,8 @@ def client():
     input_user = StringVar()
     input_field = Entry(root, text=input_user)
     input_field.pack(side=BOTTOM, fill=X)
-
+    messages.pack()
+    
     def EnterPressed(event):
         input_get = input_field.get()
         if input_get[0:7] == "sndfle ":
@@ -47,9 +45,7 @@ def client():
             messages.insert(INSERT, 'Sent : %s\n' % input_get)
             s.send(bytes(input_get, encoding='utf-8'))
 
-    messages.pack()
-
-    def Receive():
+def Receive():
         i = 1
         while True:
             recv_msg = s.recv(1024).decode('utf-8')
@@ -68,7 +64,6 @@ def client():
 
     Thread(target=Send).start()
     Thread(target=Receive).start()
-    # Thread(target=SendFile).start()
     root.mainloop()
 
 
@@ -76,7 +71,6 @@ def receiver():
     menu_window.destroy()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     ip = socket.gethostbyname(socket.gethostname())
-
     s.bind((ip, 80))
     s.listen()
 
@@ -125,7 +119,6 @@ def receiver():
 
     Thread(target=Send).start()
     Thread(target=Receive).start()
-    #Thread(target=SendFile).start()
     root.mainloop()
 
 
